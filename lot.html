@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lotereia</title>
+<meta charset="utf-8"> 
+<meta name="Author" content="WintersDreams">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
+<style type="text/css">
+html {background-color: #e5e5e5;}
+.main {position: relative; top: 3px; left: 1px;}
+</style>
+<script src="main.js"></script>
+
+<script>
+function start() {
+naviinfo();
+DisplayTime();
+}
+</script>
+
+<script>
+function calc() {
+var num=(Math.floor(Math.random() * 10));
+document.getElementById('num').innerHTML=num;
+let un1 = document.getElementById("un").value;
+if (un1<0) {document.getElementById('itog').innerHTML="Введено отрицательное число";}
+else if (isNaN(un1)==true) {document.getElementById('itog').innerHTML="Введено не числовое значание";}
+else if (un1>=10) {document.getElementById('itog').innerHTML="Введено число более 10";}
+else if (un1==num) {document.getElementById('itog').innerHTML="Результат совпал";}
+else {document.getElementById('itog').innerHTML="Результат не совпал";}
+counting();
+}
+</script>
+</head>
+<body onload="start(); return false;">
+<b>Лотерея (случайное число)<br></b>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<form onsubmit="calc(); return false;">	
+<tr><td nowrap>Введите число (0...9):  </td><td><input id="un" type="text" required value="0"></td></tr>
+<tr><td height="25px"><input type="submit" align="left" style="height:100%; width:55%;" value="Go"></td></tr>
+<tr><td nowrap>Результат:   </td><td><span id='itog'></span></td></tr>
+<tr><td nowrap>Искомое число: </td><td><span id='num'></span></td></tr>
+</form></table>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<tr><td nowrap>Расчет N: </td><td><span id="counters"></span></td></tr>
+<tr><td><span id="navi"></span></td></tr>
+<tr><td><span id="navi1"></span></td></tr>
+<tr><td><span id="disptime"></span></td></tr>
+</table>
+</body>
+</html>

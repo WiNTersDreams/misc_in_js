@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Speed</title>
+<!--Скрорость пешехода 5.184 км/ч или 1.44 м/с или 86.4 м/м или -->
+
+<meta charset="utf-8"> 
+<meta name="Author" content="WintersDreams">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
+<style type="text/css">
+html {background-color: #e5e5e5;}
+.main {position: relative; top: 3px; left: 1px;}
+</style>
+
+<script>
+function start() {
+naviinfo();
+DisplayTime();
+}
+</script>
+
+<script>
+function naviinfo() {
+var navi3;
+let navi = navigator.userAgent;
+let navi1=navigator.platform;
+//document.getElementById('navi').innerHTML=navi; //если не определять тип браузера
+document.getElementById('navi1').innerHTML=navi1;
+
+if (navigator.userAgent.toLowerCase().includes('edg')) {var navi3="Edge";}
+else if (navigator.userAgent.toLowerCase().includes('msie')) {var navi3="Internet Explorer";}
+else if (navigator.userAgent.toLowerCase().includes('yabrowser')) {var navi3="Yandex Browser";}
+else if (navigator.userAgent.toLowerCase().includes('opr')) {var navi3="Opera";}
+else if (navigator.userAgent.toLowerCase().includes('firefox')) {var navi3="Firefox";}
+else if (navigator.userAgent.toLowerCase().includes('chrome')) {var navi3="Chrome";}
+else if (navigator.userAgent.toLowerCase().includes('safari')) {var navi3="Safari";}
+else {var navi3="Other browser";}
+document.getElementById('navi').innerHTML=navi3;
+}
+</script>
+
+<script>
+function DisplayTime() {
+var dt = new Date();
+var dtt=new Intl.DateTimeFormat("ru", {
+  day: "numeric",
+  month: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric"
+});
+//var dpp = new Intl.DateTimeFormat().format(date)
+//var dt1 = dtt+"  "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds();
+document.getElementById('disptime').innerHTML=dtt.format(dt);
+}
+</script>
+
+<script>
+  function getTimeFromMins(mins) {
+  let hours = Math.trunc(mins/60);
+  let minutes = mins % 60;
+  return hours + ' час. ' + minutes.toFixed() + ' мин.';
+}
+</script>
+
+<script>
+  function getKmFromMeters(meters) {
+  let km = Math.trunc(meters/1000);
+  let metr = meters % 1000;
+  return km + ' км. ' + metr.toFixed() + ' метр.';
+}
+</script>
+
+<script>
+function calc() {
+//вначале убираем с экрана результаты предыдущего вычисления
+document.getElementById('distfin').innerHTML='';
+document.getElementById('timefin').innerHTML='';
+
+var speed=86.4;
+let ts1 = document.getElementById("timestart").value;
+let ds1 = document.getElementById("diststart").value;
+let ts2 = ts1*speed; //для расчета км если метров более 1тыс.
+let ds2 = ds1/speed; //для расчтета часов если минут более 60
+
+
+if (ts1 == 0 && ds1 == 0) {document.getElementById('timefin').innerHTML="Необходимо ввести хотя бы одно значение"; document.getElementById('distfin').innerHTML="Необходимо ввести хотя бы одно значение"; return;}
+else if (ts1 != 0 && ds1 !=0) {document.getElementById('timefin').innerHTML="Необходимо ввести только одну переменную"; document.getElementById('distfin').innerHTML="Необходимо ввести только одну переменную"; return;}
+
+else if (ts1 !=0 && ds1 ==0) {
+  if (ts1<0) {document.getElementById('timefin').innerHTML="Введено отрицательное число"; return;}
+  else if (isNaN(ts1)==true) {document.getElementById('timefin').innerHTML="Введено не числовое значание"; return;}
+  else if (ts2 > 1000) {ts3=getKmFromMeters(ts2); document.getElementById('distfin').innerHTML=ts3; return;}
+  else {document.getElementById('distfin').innerHTML=ts2.toFixed()+' метр.'; return;}
+}
+else if (ts1 ==0 && ds1 != 0) {
+  if (ds1<0) {document.getElementById('distfin').innerHTML="Введено отрицательное число"; return;}
+  else if (isNaN(ds1)==true) {document.getElementById('distfin').innerHTML="Введено не числовое значание"; return;}
+  else if (ds2 > 60) {ds3=getTimeFromMins(ds2); document.getElementById('timefin').innerHTML=ds3; return;}
+  else {document.getElementById('timefin').innerHTML=ds2.toFixed()+' мин.'; return;}
+}
+}
+</script>
+</head>
+
+<body onload="start(); return false;">
+<b>Расчет расстояния которое может пройти пешеход <br>за определенной время (или наоборот).<br>
+ Скорость пешеходу усреднена до 5.1 км/ч<br></b>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<form onsubmit="calc(); return false;">	
+<tr><td nowrap>Затраченное время (мин):</td><td><input id="timestart" type="text"></td></tr>
+<tr><td nowrap>Пройденное расстояние (метры):</td><td><input id="diststart" type="text"></td></tr>
+<tr><td height="25px"><input type="submit" align="left" style="height:100%; width:55%;" value="Calc"></td></tr>
+<tr><td nowrap>Расчетное время:   </td><td><span id='timefin'></span></td></tr>
+<tr><td nowrap>Рассчетное расстояние: </td><td><span id='distfin'></span></td></tr>
+<tr><td></td></tr>
+</form></table>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<tr><td><span id="navi"></span></td></tr>
+<tr><td><span id="navi1"></span></td></tr>
+<tr><td><span id="disptime"></span></td></tr>
+</table>
+</body>
+</html>

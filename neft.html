@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Neft1</title>
+<meta charset="utf-8"> 
+<meta name="Author" content="WintersDreams">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
+<style type="text/css">
+html {background-color: #e5e5e5;}
+.main {position: relative; top: 3px; left: 1px;}
+</style>
+<script src="main.js"></script>
+
+<script>
+function start() {
+naviinfo();
+DisplayTime();
+}
+</script>
+
+<script>
+function calc() {
+
+var rn2, rn3;
+var rn1 = Number(document.getElementById("rn").value);
+if (rn1<=0) {document.getElementById('rnfin').innerHTML="Введено отрицательное или пустое число";}
+else if (isNaN(rn1)==true) {document.getElementById('rnfin').innerHTML="Введено не числовое значание";}
+else {var rn2 = (rn1-(rn1*0.01))-0.5; document.getElementById('rnfin').innerHTML=rn2.toFixed(2)+' руб.'; rn3=rn2;}
+
+var gp1 = Number(document.getElementById('gp').value);
+var gp0 = ((document.getElementById('gp').value)-((document.getElementById('gp').value)*0.01)-1);
+document.getElementById('gpfin').innerHTML=gp0.toFixed(2)+' руб.';
+
+// document.getElementById('gpfin').innerHTML=((document.getElementById('gp').value)-((document.getElementById('gp').value)*0.1));
+// второй вариант расчета 'gpfin'
+
+if (gp0 != rn2) {
+  if (gp0 < rn2) {document.getElementById('gpfin').style.color = '#005a00'; document.getElementById('gpnam').style.color = '#005a00'; document.getElementById('rnnam').style.color = '#8b0000'; document.getElementById('rnfin').style.color = '#8b0000';}
+  else {document.getElementById('rnfin').style.color = '#005a00'; document.getElementById('rnnam').style.color = '#005a00'; document.getElementById('gpfin').style.color = '#8b0000'; document.getElementById('gpnam').style.color = '#8b0000';}
+}
+
+document.getElementById('1l').innerHTML=Math.abs(gp0-rn3).toFixed(2)+' руб.';
+let v10l = Math.abs((gp0-rn3)*10);
+document.getElementById('10l').innerHTML=v10l.toFixed(2)+' руб.';
+document.getElementById('40l').innerHTML=Math.abs((gp0-rn3)*40).toFixed(2)+' руб.';
+// второй вариант расчета '40l'
+
+var equl = Math.abs((gp1-rn1)-0.505);
+if (gp0 > rn3) 
+  {let equl1 = rn1+equl; document.getElementById('equ').innerHTML='Роснефть: '+equl1.toFixed(2)+' руб.';}
+else 
+  {let equl1 = gp1+equl; document.getElementById('equ').innerHTML='Газпромнефть: '+equl1.toFixed(2)+' руб.';} 
+
+}
+</script>
+
+</head>
+
+<body onload="start(); return false;">
+<b>Расчет стоимости литра бензина с учетом скидок, кэшбэка и т.п.<br></b>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<form onsubmit="calc(); return false;">	
+<tr><td nowrap>ГазПромНефть:</td><td><input id="gp" type="text" required value="52.60"></td></tr>
+<tr><td nowrap>РосНефть:</td><td><input id="rn" type="text" required value="49.55"></td></tr>
+<tr><td height="25px"><input type="submit" align="left" style="height:100%; width:55%;" value="Вычислить"></td></tr>
+<tr><td></td></tr>
+<tr><td nowrap id="gpnam">ГазПромНефть -1% -1.0р:   </td><td><span id='gpfin'></span></td></tr>
+<tr><td nowrap id="rnnam">РосНефть -1% -0.5р: </td><td><span id='rnfin'></span></td></tr>
+<tr><td><br></td></tr>
+<tr><td nowrap>Разница с 1л: </td><td><span id='1l'></span></td></tr>
+<tr><td nowrap>Разница с 10л: </td><td><span id='10l'></span></td></tr>
+<tr><td nowrap>Разница с 40л: </td><td><span id='40l'></span></td></tr>
+<tr><td nowrap>Сравнятся при цене </td><td><span id='equ'></span></td></tr>
+</form></table>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<tr><td><span id="navi"></span></td></tr>
+<tr><td><span id="navi1"></span></td></tr>
+<tr><td><span id="disptime"></span></td></tr>
+</table>
+</body>
+</html>
