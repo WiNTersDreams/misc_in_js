@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>km/l or l/km</title>
+
+<meta charset="utf-8"> 
+<meta name="Author" content="WintersDreams">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
+<style type="text/css">
+html {background-color: #e5e5e5;}
+.main {position: relative; top: 3px; left: 1px;}
+</style>
+
+<script>
+function start() {
+naviinfo();
+DisplayTime();
+}
+</script>
+
+<script>
+function naviinfo() {
+var navi3;
+let navi = navigator.userAgent;
+let navi1=navigator.platform;
+//document.getElementById('navi').innerHTML=navi; //если не определять тип браузера
+document.getElementById('navi1').innerHTML=navi1;
+
+if (navigator.userAgent.toLowerCase().includes('edg')) {var navi3="Edge";}
+else if (navigator.userAgent.toLowerCase().includes('msie')) {var navi3="Internet Explorer";}
+else if (navigator.userAgent.toLowerCase().includes('yabrowser')) {var navi3="Yandex Browser";}
+else if (navigator.userAgent.toLowerCase().includes('opr')) {var navi3="Opera";}
+else if (navigator.userAgent.toLowerCase().includes('firefox')) {var navi3="Firefox";}
+else if (navigator.userAgent.toLowerCase().includes('chrome')) {var navi3="Chrome";}
+else if (navigator.userAgent.toLowerCase().includes('safari')) {var navi3="Safari";}
+else {var navi3="Other browser";}
+document.getElementById('navi').innerHTML=navi3;
+}
+</script>
+
+<script>
+function DisplayTime() {
+var dt = new Date();
+var dtt=new Intl.DateTimeFormat("ru", {
+  day: "numeric",
+  month: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric"
+});
+//var dpp = new Intl.DateTimeFormat().format(date)
+//var dt1 = dtt+"  "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds();
+document.getElementById('disptime').innerHTML=dtt.format(dt);
+}
+</script>
+
+<script>
+function calc() {
+//вначале убираем с экрана результаты предыдущего вычисления
+document.getElementById('kmlfin').innerHTML='';
+document.getElementById('lkmfin').innerHTML='';
+
+let ts1 = document.getElementById("kmlstart").value;
+let ds1 = document.getElementById("lkmstart").value;
+let ts2 = 100/ts1;
+let ds2 = 100/ds1;
+
+
+if (ts1 == 0 && ds1 == 0) {document.getElementById('lkmfin').innerHTML="Необходимо ввести хотя бы одно значение"; document.getElementById('kmlfin').innerHTML="Необходимо ввести хотя бы одно значение"; return;}
+else if (ts1 != 0 && ds1 !=0) {document.getElementById('lkmfin').innerHTML="Необходимо ввести только одну переменную"; document.getElementById('kmlfin').innerHTML="Необходимо ввести только одну переменную"; return;}
+
+else if (ts1 !=0 && ds1 ==0) {
+  if (ts1<0) {document.getElementById('lkmfin').innerHTML="Введено отрицательное число"; return;}
+  else if (isNaN(ts1)==true) {document.getElementById('lkmfin').innerHTML="Введено не числовое значание"; return;}
+  else {document.getElementById('lkmfin').innerHTML=ts2.toFixed(2); return;}
+}
+else if (ts1 ==0 && ds1 != 0) {
+  if (ds1<0) {document.getElementById('kmlfin').innerHTML="Введено отрицательное число"; return;}
+  else if (isNaN(ds1)==true) {document.getElementById('kmlfin').innerHTML="Введено не числовое значание"; return;}
+  else {document.getElementById('kmlfin').innerHTML=ds2.toFixed(2); return;}
+}
+}
+</script>
+</head>
+
+<body onload="start(); return false;">
+<b>Перевести км/л в л/100км и обратно<br></b>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<form onsubmit="calc(); return false;">	
+<tr><td nowrap>км/л =:</td><td><input id="kmlstart" type="text"></td></tr>
+<tr><td nowrap>л/100км =:</td><td><input id="lkmstart" type="text"></td></tr>
+<tr><td height="25px"><input type="submit" align="left" style="height:100%; width:55%;" value="Calc"></td></tr>
+<tr><td nowrap>л/100км:</td><td><span id='lkmfin'></span></td></tr>
+<tr><td nowrap>км/л: </td><td><span id='kmlfin'></span></td></tr>
+<tr><td></td></tr>
+</form></table>
+<hr width="50%" align="left">
+<table class="main" border="0" cellpadding="3" cellspacing="5">
+<tr><td><span id="navi"></span></td></tr>
+<tr><td><span id="navi1"></span></td></tr>
+<tr><td><span id="disptime"></span></td></tr>
+</table>
+</body>
+</html>
